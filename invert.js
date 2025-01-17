@@ -21,7 +21,7 @@ const flipColour = (A)=>{
         }
         flippedMat.push(tempArray)
     }
-    console.log(flippedMat)
+    //console.log(flippedMat)
     return flippedMat
 }
 //iš pradžių bandžiau tiesiog primityviai sudėti arrayus atvirksčiai
