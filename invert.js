@@ -49,18 +49,25 @@ const invert = (N, A, direction) => {
 //flipColour(A)
 //invert(N,A)
 const emojiArray = ['😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆'];
-const randomEmojiMat = (N) => {
-    const emojiMat = []
-    for (let x = 0; x <N; x++){
-        let newArray = []
-        for(let j = 0; j <N; j++){
-            let randomEmoji = Math.floor(Math.random() * emojiArray.length)
-            newArray.push(emojiArray[randomEmoji])
+const ChangeValueToRandomEmoji = () =>{
+    const randomEmojiMat = [];
+    for(let row of A){    
+        let tempArray = [];  
+        for (let element of row){
+            if(element === 1){
+                let randomEmoji = Math.floor(Math.random() * emojiArray.length)
+                element = emojiArray[randomEmoji]
+                tempArray.push(element)
+            }
+            //  supratau, kad push(' ') nebus gera idėja sunkiuoju būdu. 
+            else{
+                element = '⬜'
+                tempArray.push(element)
+            }
         }
-        emojiMat.push(newArray)
+        randomEmojiMat.push(tempArray)
     }
-    //console.log(emojiMat)
-    return emojiMat
+    return randomEmojiMat
 }
 invert(N, flipColour(A))
 //masyvo renderinimui
@@ -80,7 +87,7 @@ const appendArray = (coppyA) =>{
 }
 //rotacijos event listeneris 
 const rotateEvent = () => {
-    let coppyA = appendArray(randomEmojiMat(N))
+    let coppyA = appendArray(ChangeValueToRandomEmoji())
     document.getElementById('btnRight').addEventListener('click', () => {
         coppyA = appendInvertedArray(coppyA, 'right')
     });
