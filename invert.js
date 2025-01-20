@@ -26,19 +26,66 @@ const flipColour = (A)=>{
 }
 //iš pradžių bandžiau tiesiog primityviai sudėti arrayus atvirksčiai
 // , bet aišku netaip suveikė, kaip galvojau :D
-const invert = (N, A) => {
+const invert = (N, A, direction) => {
     const invertedMat = [];
-    for(let x=0; x<N; x++){
-        let tempArray = [];
-        for(let row = N - 1; row >=0; row--){
-            tempArray.push(A[row][x]);
-        }
-        invertedMat.push(tempArray);
-    }
-    console.log(invertedMat)
+    if(direction === 'right'){
+        for(let x=0; x<N; x++){
+            let tempArray = [];
+            for(let row = N - 1; row >=0; row--){
+                tempArray.push(A[row][x]);
+            }
+            invertedMat.push(tempArray);
+    }}else{
+        for(let x=0; x<N; x++){
+            let tempArray = [];
+            for(let row = N - 1; row >=0; row--){
+                tempArray.unshift(A[row][x]);
+            }
+            invertedMat.unshift(tempArray);
+    }}
+    //console.log(invertedMat)
     return invertedMat
 }
 //flipColour(A)
 //invert(N,A)
+const emojiArray = ['😀', '😁', '😂', '🤣', '😃', '😄', '😅', '😆'];
+const randomEmojiMat = (N) => {
+    const emojiMat = []
+    for (let x = 0; x <N; x++){
+        let newArray = []
+        for(let j = 0; j <N; j++){
+            let randomEmoji = Math.floor(Math.random() * emojiArray.length)
+            newArray.push(emojiArray[randomEmoji])
+        }
+        emojiMat.push(newArray)
+    }
+    //console.log(emojiMat)
+    return emojiMat
+}
 invert(N, flipColour(A))
-
+//masyvo renderinimui
+const appendInvertedArray = (coppyA, direction) =>{
+    coppyA = invert(N, coppyA, direction)
+    return appendArray(coppyA)
+}
+const appendArray = (coppyA) =>{
+    const emojiBox = document.querySelector('.emojiBox');
+    emojiBox.innerHTML = '';
+    coppyA.forEach((row) => {
+        const r = document.createElement('p');
+        r.innerHTML = row.join(' '); 
+        emojiBox.append(r);
+    });
+    return coppyA
+}
+//rotacijos event listeneris 
+const rotateEvent = () => {
+    let coppyA = appendArray(randomEmojiMat(N))
+    document.getElementById('btnRight').addEventListener('click', () => {
+        coppyA = appendInvertedArray(coppyA, 'right')
+    });
+    document.getElementById('btnLeft').addEventListener('click', () => {
+        coppyA = appendInvertedArray(coppyA)
+    })
+};
+rotateEvent();
